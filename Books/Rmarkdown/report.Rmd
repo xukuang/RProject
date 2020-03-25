@@ -1,0 +1,164 @@
+---
+title: "简单技术报告框架"
+author: "李东风"
+date: '2019-07-04'
+documentclass: article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+##library(tidyverse) # Wickham的数据整理的整套工具
+##library(lubridate) # 日期和日期时间数据处理
+pdf.options(height=10/2.54, width=10/2.54, family="GB1") # 注意：此设置要放在最后
+```
+
+
+# 问题介绍 {#intro}
+
+本子目录（Rmarkdown）是一个简单的R Markdown文件模板。
+只要复制此子目录改为适当名称，
+然后在复制得到的子目录中新建一个RStudio项目，
+在RStudio项目中打开report.Rmd文件进行修改，
+就可以将其输出为HTML、Word、PDF等格式。
+
+这个模板是一个简单的R Markdown文件模板，
+不使用bookdown的功能，
+所以不支持公式、图表的自动编号和引用等高级功能。
+
+但是，如果用到HTML输出和数学公式，
+为了避免网络延迟使得公式显示困难以及断网情况下网页上公式的正常显示，
+需要使得.Rmd源文件的上两层的目录中有MathJax目录，
+本模板发布的打包文件中已经包含了此内容，只要不随便更改目录结构就没有问题。
+这样一份MathJax本地库可以支持多个Rmarkdown和bookdown项目。
+MathJax库总空间并不大但是有三万多个小文件，
+很不利于项目备份与分发。
+
+这个模板直接可以转换为HTML和Word格式，
+如果操作系统中安装有LaTeX编译系统，
+还可以通过LaTeX转换成PDF。
+实际上，
+HTML文件可以在网络浏览器中通过打印到一个PDF打印机转换为PDF，
+Word可以在MS Office软件中另存为PDF。
+
+公式测试：
+
+$$\begin{aligned}
+\text{简单收益率} = \frac{P_t - P_{t-1}}{P_{t-1}}
+\end{aligned}$$
+
+可以用Rstudio的Knit快捷图标实现转换，
+但有时这种功能不太可靠，
+可以用如下命令进行转换：
+
+```{r conv, echo=TRUE, eval=FALSE}
+## 转换为HTML：
+rmarkdown::render("report.Rmd", 
+  output_format="html_document", encoding="UTF-8")
+## 转换为Word：
+rmarkdown::render("report.Rmd", 
+  output_format="word_document", encoding="UTF-8")
+## 转换为PDF，借助于LaTeX：
+rmarkdown::render("report.Rmd", 
+  output_format="pdf_document", encoding="UTF-8")
+```
+
+如果有其他的Rmd文件，只要在命令中改成相应的Rmd文件名即可。
+
+
+# 关于生成PDF的说明 {#tinytex}
+
+如果想将R Markdown文件借助于LaTeX格式转换为PDF， 
+需要在系统中安装一个TeX编译器。 
+现在的rmarkdown包要求使用tinytex扩展包以及配套的[TinyTeX软件包](https://yihui.name/tinytex/)，
+好像不再支持使用本机原有的LaTex编译系统， 
+如果不安装tinytex，编译为PDF格式时会出错。
+TinyTeX优点是直接用R命令就可以安装，
+更新也由R自动进行，不需要用户干预。
+但是，安装时需要从国外网站下载许多文件，
+有因为网络不畅通而安装失败的危险。
+
+为了安装R的tinytex扩展包和单独的TinyTeX编译软件，应运行：
+
+```{r usage-pdfbook-tinytex01, echo=TRUE, eval=FALSE}
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+安装过程需要从国外的服务器下载许多文件， 
+在国内的网络环境下有可能因为网络超时而失败。 
+如果安装成功， 
+TinyTeX软件包在MS Windows系统中一般会安装在 `C:\Users\用户名\AppData\Roaming\MikTex`目录中，
+其中“用户名”应替换成系统当前用户名。 
+如果需要删除TinyTeX软件包， 只要直接删除那个子目录就可以。
+
+为了判断TinyTeX是否安装成功， 在RStudio中运行
+
+```{r usage-pdfbook-tinytex02, echo=TRUE, eval=FALSE}
+tinytex::is_tinytex()
+```
+
+结果应为TRUE, 出错或者结果为FALSE都说明安装不成功。
+在编译`pdf_book`时，可能会需要联网下载LaTeX所需的格式文件。
+
+Bookdown借助操作系统中安装的LaTeX编译软件TinyTeX将整本书转换成一个PDF文件，
+这需要用户对LaTeX有一定的了解，
+否则一旦出错，
+就完全不知道如何解决。
+用户如果需要进行LaTeX定制，
+可修改模板中的`preamble.tex`文件。
+
+
+# 数据分析演示 {#ana}
+
+## 样例数据 {#ana-data}
+
+以R软件中带有的iris数据为例，
+有3个品种的鸢尾花，
+各抽取了50枚样品，
+测量花瓣、花萼的长宽。
+
+从数据中随机抽取10个观测，列表如下：
+
+```{r ana-data-table}
+set.seed(1)
+d1 <- iris[sort(sample(150, size=10)), ]
+knitr::kable(d1)
+```
+
+其中`knit::kable()`用于显示数据框。
+
+
+## 相关系数 {#ana-corr}
+
+对每种花，
+分别计算四个测量值的相关系数:
+
+```{r ana-corr}
+sps <- sort(unique(iris$Species))
+for(sp in sps){
+  d2 <- iris[iris$Species == sp,]
+  cat("Species: ", sp, "\n")
+  print(cor(d2[,1:4]), digits=2)
+}
+```
+
+
+## 散点图矩阵 {#ana-scat}
+
+作所有观测的四个测量值的散点图矩阵，
+并用不同颜色区分品种：
+
+
+```{r ana-scatter}
+cols <- c("red", "blue", "green")
+names(cols) <- sps
+plot(iris[,1:4], col=cols[as.character(iris$Species)])
+```
+
+# 总结 {#conc}
+
+通过对分析结果的讨论，
+给出对研究报告或者作业题的适当结论。
+
+
+

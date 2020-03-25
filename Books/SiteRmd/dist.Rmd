@@ -1,0 +1,15 @@
+---
+title: "概率分布"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+主要概率分布分为离散型、连续型，
+一元分布、多元分布，
+以及随机过程的分布。
+
+**随机变量**是定义在概率空间$(\Omega, \mathscr F, P)$上，
+取值于实数域的可测函数。
+

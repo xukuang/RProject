@@ -1,0 +1,15 @@
+html_document:
+  toc: true
+  number_sections: true
+  mathjax: "../../MathJax/MathJax.js"
+  includes:
+    in_header: _header.html
+word_document:
+  reference_docx: wordstyle.docx
+  toc: true
+pdf_document:
+  latex_engine: xelatex
+  toc: true
+  number_sections: true
+  includes:
+    in_header: preamble.tex

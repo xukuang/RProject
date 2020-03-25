@@ -1,0 +1,109 @@
+---
+title: Slidy格式HTML幻灯片模板
+author: 李东风
+date: 2020-02-04
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, eval=TRUE, 
+  out.width="600")
+##library(tidyverse)
+```
+
+
+## 介绍 {#intro}
+
+本子目录（Slides）是一个简单的用来制作Slidy格式的HTML幻灯片的R Markdown文件模板。
+结果将转换为HTML幻灯片在网络浏览器中播放。
+只要复制此子目录改为适当名称，
+然后在复制得到的子目录中新建一个RStudio项目，
+在RStudio项目中打开slides.Rmd文件进行修改，
+就可以将其输出为slidy格式的HTML幻灯片。
+
+---
+
+如果用到数学公式，
+为了避免网络延迟使得公式显示困难以及断网情况下网页上公式的正常显示，
+需要使得.Rmd源文件的上两层的目录中有MathJax目录。
+这样一份MathJax本地库可以支持多个Rmarkdown和bookdown项目。
+MathJax库总空间并不大但是有三万多个小文件，
+很不利于项目备份与分发。
+
+
+## 公式测试：
+
+$$\begin{aligned}
+\text{简单收益率} = \frac{P_t - P_{t-1}}{P_{t-1}}
+\end{aligned}$$
+
+
+## 转换
+
+可以用Rstudio的Knit快捷图标实现转换（选其中的knit to HTML(slidy)），
+也可以用如下命令进行转换：
+
+```{r conv, echo=TRUE, eval=FALSE}
+rmarkdown::render("slides.Rmd", 
+  output_format="slidy_presentation", encoding="UTF-8")
+```
+
+
+## 生成普通HTML文件
+
+- 对slidy幻灯片的Rmd源文件不加修改，
+也可以通过命令直接转换为普通的单页HTML文件，
+但是因为在slidy幻灯片源文件中二级标题用来分帧，
+而普通Rmd文件中二级标题用来分小节，
+所以生成的单页HTML文件会有许多小节。
+
+- 命令如：
+
+```{r conv2, echo=TRUE, eval=FALSE}
+rmarkdown::render("slides.Rmd", output_file="handout.html", 
+  output_format="html_document", encoding="UTF-8")
+```
+
+
+## 转换为MS PowerPoint幻灯片
+
+可以用Rstudio的Knit快捷图标实现转换（选其中的knit to PowerPoint），
+或者用如下命令：
+
+```{r conv3, echo=TRUE, eval=FALSE}
+rmarkdown::render("slides.Rmd", 
+  output_format="powerpoint_presentation", encoding="UTF-8")
+```
+
+
+## 转换为Beamer幻灯片PDF文件
+
+可以用Rstudio的Knit快捷图标实现转换（选其中的knit to PDF(beamer)），
+也可以用如下命令进行转换：
+
+```{r conv4, echo=TRUE, eval=FALSE}
+rmarkdown::render("slides.Rmd", 
+  output_format="beamer_presentation", encoding="UTF-8")
+```
+
+此功能目前对中文内容支持不好，
+还不能成功转换。
+
+
+Slidy网页格式幻灯片的播放控制
+------------------------------
+
+* 鼠标左键单击、光标右移键、向下翻页键、空格键都可以翻到下一页；
+* 光标左移键、向上翻页键回退一页；
+* 单击下方的Contents或单击C键显示幻灯片目录列表，可单击转移到任意页面；
+* Home键回到幻灯片开头；
+* 用A键切换是否将所有页面合并显示成一个长的网页；
+
+---
+
+* 用S键缩写字体，用B键放大字体；
+* 通过选择保存为PDF的打印机进行打印，
+  可以将幻灯片转换为PDF，
+  但是打印生成的PDF仍是每页仅有原来的一帧，
+  所以先用上面的方法转换成一个单页的HTML再打印可能更合适。
+

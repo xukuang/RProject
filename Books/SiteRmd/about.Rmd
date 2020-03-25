@@ -1,0 +1,9 @@
+---
+title: "关于《概率论》网站"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+这是北京大学数学科学学院《概率论》课李东风主讲时的参考资料网站。

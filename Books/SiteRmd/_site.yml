@@ -1,0 +1,17 @@
+name: "概率论"
+output_dir: "_probbook"
+output:
+  html_document: 
+    toc: true
+    number_sections: true
+    mathjax: "../../../MathJax/MathJax.js"
+    self_contained: false
+    includes:
+      in_header: "_header.html"
+navbar:
+  title: "概率论"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html

@@ -1,0 +1,26 @@
+slidy_presentation: 
+    toc: false
+    mathjax: "../../MathJax/MathJax.js"
+    self_contained: false
+    font_adjustment: -1
+    duration: 20
+    footer: "北京大学"
+    incremental: true
+    includes:
+      in_header: "_header.html"
+powerpoint_presentation:
+    slide_level: 2
+beamer_presentation:
+    latex_engine: xelatex
+    includes:
+      in_heaer: "preamble.tex"
+    slide_level: 2
+    theme: CambridgeUS
+    colortheme: dolphin
+html_document: 
+    toc: true
+    number_sections: false
+    mathjax: "../../MathJax/MathJax.js"
+    self_contained: false
+    includes:
+      in_header: "_header.html"

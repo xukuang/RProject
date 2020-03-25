@@ -1,0 +1,60 @@
+---
+title: "概率论"
+output:
+  html_document:
+    toc: false
+    number_sections: false
+---
+
+
+# 介绍
+
+这是用`rmarkdown::render_site()`功能制作简易网站的示例。
+只要复制此子目录改为适当名称，如`MySite`，
+然后在复制得到的子目录中新建一个RStudio项目，
+在RStudio项目中打开各个.Rmd文件进行修改，
+也可以生成一些新的.Rmd文件。
+网站名称等设置在`_site.yml`文件中，
+可以适当地修改。
+
+如果用到HTML输出和数学公式，
+为了避免网络延迟使得公式显示困难以及断网情况下网页上公式的正常显示，
+需要使得.Rmd源文件的上两层的目录中有MathJax目录，
+本模板发布的打包文件中已经包含了此内容，只要不随便更改目录结构就没有问题。
+这样一份MathJax本地库可以支持多个Rmarkdown和bookdown项目。
+MathJax库总空间并不大但是有三万多个小文件，
+很不利于项目备份与分发。
+
+公式测试：
+
+$$\begin{aligned}
+\text{简单收益率} = \frac{P_t - P_{t-1}}{P_{t-1}}
+\end{aligned}$$
+
+为了将所有源文件转换为一个完整网站，用命令：
+
+```{r conv, echo=TRUE, eval=FALSE}
+rmarkdown::render_site()
+```
+
+如果仅转换其中的某个源文件，
+如`dist.Rmd`，用命令如
+
+```{r conv2, echo=TRUE, eval=FALSE}
+rmarkdown::render_site("dist.Rmd")
+```
+
+这样制作网站的办法是更新容易，
+缺点是需要自己管理链接。
+为了将网站发布到网站服务器而不仅是本地浏览，
+只要将生成的`_probbook`子目录上传到网站服务器就可以发布网站内容，
+如果网页中有数学公式，
+需要`_probbook`子目录上三层目录中包含`MathJax`子目录以及其中的内容。
+
+这个示例网站是概率论课程参考网站。
+
+
+# 目录
+
+* [概率分布](dist.html)
+* [期望](expect.html)

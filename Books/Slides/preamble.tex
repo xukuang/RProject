@@ -1,0 +1,17 @@
+\usepackage{ctex}     % 支持中文的标点和章节模式
+
+%\usepackage{xltxtra} % XeLaTeX的一些额外符号
+% 设置中文字体
+%\setCJKmainfont[BoldFont={黑体},ItalicFont={楷体}]{新宋体}
+
+\usepackage{amsthm,mathrsfs} % 基本的ams数学公式
+\usepackage{booktabs}        % 增强的表格功能
+\usepackage{longtable}       % 支持超过一页的表格
+
+% 下面是自定义的定理环境排版方法
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
